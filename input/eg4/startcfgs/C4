@@ -1,0 +1,30 @@
+hostname C4
+interface GigabitEthernet0/0
+ description H2_C4
+ ip address 17.1.0.1 255.255.255.0
+ no shut
+interface GigabitEthernet0/1
+ description C3_C4
+ ip address 17.1.1.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description C4_P3
+ ip address 8.3.2.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/3
+ description C4_P4
+ ip address 8.4.2.2 255.255.255.252
+ no shut
+router ospf 1
+ network 17.1.1.1 0.0.0.255 area 0
+router bgp 65002
+ neighbor 17.1.1.2 remote-as 65002
+ ! network 17.1.1.0 mask 255.255.255.252
+ network 17.1.0.0 mask 255.255.255.0
+ neighbor 8.3.2.1 remote-as 65001
+ network 8.3.2.0 mask 255.255.255.252
+ neighbor 8.4.2.1 remote-as 65001
+ network 8.4.2.0 mask 255.255.255.252
+！
+do wr
+！

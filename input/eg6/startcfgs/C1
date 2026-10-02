@@ -1,0 +1,15 @@
+hostname C1
+interface GigabitEthernet0/0
+ description P0_C1
+ ip address 8.0.1.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description H1_C1
+ ip address 1.1.0.1 255.255.255.0
+ no shut
+router bgp 65001
+ neighbor 8.0.1.1 remote-as 65000
+ ! network 1.1.0.0 mask 255.255.255.0
+！
+do wr
+！

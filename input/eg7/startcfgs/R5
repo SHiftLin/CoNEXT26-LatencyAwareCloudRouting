@@ -1,0 +1,21 @@
+hostname R5
+interface Loopback0
+ description loopback
+ ip address 2.127.0.5 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description R5_RR7
+ ip address 2.5.0.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description R5_R6
+ ip address 2.5.1.1 255.255.255.252
+ no shut
+router ospf 1
+ network 2.0.0.0 0.255.255.255 area 0
+router bgp 2
+ neighbor 2.127.0.7 remote-as 2
+ neighbor 2.127.0.7 update-source loopback0
+ neighbor 2.5.1.2 remote-as 3
+ network 2.5.1.0 mask 255.255.255.252
+do wr

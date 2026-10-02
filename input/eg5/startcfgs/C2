@@ -1,0 +1,25 @@
+hostname C2
+interface Loopback0
+ ip address 17.8.8.1 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description H2_C2
+ ip address 17.1.0.1 255.255.255.0
+ no shut
+interface GigabitEthernet0/1
+ description C2_P3
+ ip address 8.3.2.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description C2_P4
+ ip address 8.4.2.2 255.255.255.252
+ no shut
+router bgp 65002
+ neighbor 8.3.2.1 remote-as 65001
+ network 8.3.2.0 mask 255.255.255.252
+ neighbor 8.4.2.1 remote-as 65001
+ network 8.4.2.0 mask 255.255.255.252
+ ! network 17.1.0.0 mask 255.255.255.0
+！
+do wr
+！

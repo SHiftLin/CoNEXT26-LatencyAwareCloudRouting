@@ -1,0 +1,15 @@
+hostname C3
+interface GigabitEthernet0/0
+ description P0_C3
+ ip address 8.0.3.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description H3_C3
+ ip address 3.1.0.1 255.255.255.0
+ no shut
+router bgp 65003
+ neighbor 8.0.3.1 remote-as 65000
+ network 3.1.0.0 mask 255.255.255.0
+！
+do wr
+！

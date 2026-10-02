@@ -1,0 +1,137 @@
+---
+project_name: 'bgp_eg4'
+gns3_server: 'http://174.109.107.74'
+gns3_host_ip: '174.109.107.74' # for [gns3_send_start_config_telnet]
+START_CFGS_PATH: 'input/eg4/startcfgs/' # for [gns3_send_start_config_telnet]
+MGMT-SW: # skip [gns3_create_mgmt_links]
+
+# global_delay_factor for [gns3_send_start_config_telnet]
+# I used a global delay parameter because
+# my GNS3 server is located far away from me (380>= latency).
+# info https://ktbyers.github.io/netmiko/docs/netmiko/
+
+global_delay_factor: 1
+
+gns3_nodes:
+# The following nodes will be created in the GNS3 project
+  # AS 65000
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: C1
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: C2
+  - appliance: VPCS
+    name: H1
+  
+  # AS 65001
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: P1
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: P2
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: P3
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: P4
+  # Router Reflector
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: RR
+
+  # AS 65002
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: C3
+  - appliance: 'Cisco IOSv 15.6(2)T'
+    name: C4
+  - appliance: VPCS
+    name: H2
+
+gns3_links:
+# The following link pairs describe P2P ethernet connections between nodes
+  # AS 65000
+  - node1_name: H1
+    node1_interface: '0' # Gi0/0
+    node2_name: C1
+    node2_interface: '0' # Gi0/0
+  - node1_name: C1
+    node1_interface: '1' # Gi0/1
+    node2_name: C2
+    node2_interface: '1' # Gi0/1
+
+  # AS 65002
+  - node1_name: H2
+    node1_interface: '0' # Gi0/0
+    node2_name: C4
+    node2_interface: '0' # Gi0/0
+  - node1_name: C3
+    node1_interface: '1' # Gi0/1
+    node2_name: C4
+    node2_interface: '1' # Gi0/1
+
+  # AS 65001
+  - node1_name: P1
+    node1_interface: '0' # Gi0/0
+    node2_name: RR
+    node2_interface: '0' # Gi0/0
+  - node1_name: P2
+    node1_interface: '0' # Gi0/0
+    node2_name: RR
+    node2_interface: '1' # Gi0/1
+  - node1_name: P3
+    node1_interface: '0' # Gi0/0
+    node2_name: RR
+    node2_interface: '2' # Gi0/2
+  - node1_name: P4
+    node1_interface: '0' # Gi0/0
+    node2_name: RR
+    node2_interface: '3' # Gi0/3
+
+  # AS 65000 - AS 65001
+  - node1_name: C1
+    node1_interface: '2' # Gi0/2
+    node2_name: P1
+    node2_interface: '1' # Gi0/1
+  - node1_name: C1
+    node1_interface: '3' # Gi0/3
+    node2_name: P2
+    node2_interface: '1' # Gi0/1
+  - node1_name: C2
+    node1_interface: '2' # Gi0/2
+    node2_name: P3
+    node2_interface: '1' # Gi0/1
+  - node1_name: C2
+    node1_interface: '3' # Gi0/3
+    node2_name: P4
+    node2_interface: '1' # Gi0/1
+
+  # AS 65002 - AS 65001
+  - node1_name: C3
+    node1_interface: '2' # Gi0/2
+    node2_name: P1
+    node2_interface: '2' # Gi0/2
+  - node1_name: C3
+    node1_interface: '3' # Gi0/3
+    node2_name: P2
+    node2_interface: '2' # Gi0/2
+  - node1_name: C4
+    node1_interface: '2' # Gi0/2
+    node2_name: P3
+    node2_interface: '2' # Gi0/2
+  - node1_name: C4
+    node1_interface: '3' # Gi0/3
+    node2_name: P4
+    node2_interface: '2' # Gi0/2
+
+gns3_startup_config_telnet:
+# On these devices will be uploaded a startup config using telnet from 'START_CFGS_PATH:'
+  - name: H1
+  - name: C1
+  - name: C2
+  - name: H2
+  - name: C3
+  - name: C4
+  - name: P1
+  - name: P2
+  - name: P3
+  - name: P4
+  - name: RR
+gns3_mgmt_links:
+# The following devices will be connected to the 'MGMT-SW:' for remote access via SSH
+  - name: # skip [gns3_create_mgmt_links]

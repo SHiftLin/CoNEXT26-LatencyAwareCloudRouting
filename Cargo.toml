@@ -1,0 +1,75 @@
+[package]
+name = "simulator"
+version = "0.1.0"
+edition = "2021"
+default-run = "simulator"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+env_logger = "0.10.0"
+histo = "1.0.0"
+log = "0.4.17"
+rand = "0.8.5"
+serde_json = "1.0.96"
+prefix-trie = "0.2.4"
+ipnet = "2.9.0"
+geographiclib-rs = "0.2.4"
+
+sim = { path = "src/sim" }
+topo = { path = "src/topo" }
+traceroutes = { path = "src/traceroutes" }
+compare = { path = "src/compare" }
+sim_result = { path = "src/sim_result" }
+database = { path = "src/database" }
+postgres = "0.19.10"
+clap = { version = "4.5.41", features = ["derive"] }
+regex = "1.11.1"
+toml = "0.9.2"
+serde = "1.0.219"
+rayon = "1.10.0"
+itertools = "0.14.0"
+monocle = { version = "1.2.0", default-features = false, features = ["lib"] }
+
+[workspace]
+members = ["src/compare", "src/database", "src/sim_result", "src/traceroutes"]
+
+[[bin]]
+name = "converter"
+path = "src/converter.rs"
+
+[[bin]]
+name = "infer_rel"
+path = "src/infer_rel.rs"
+
+[[bin]]
+name = "discover_link"
+path = "src/discover_link.rs"
+
+[[bin]]
+name = "discover_ip"
+path = "src/discover_ip.rs"
+
+[[bin]]
+name = "compare"
+path = "src/compare.rs"
+
+[[bin]]
+name = "compare_scope"
+path = "src/compare_scope.rs"
+
+[[bin]]
+name = "compare_default"
+path = "src/compare_default.rs"
+
+[[bin]]
+name = "discover_neighbors"
+path = "src/discover_neighbors.rs"
+
+[[bin]]
+name = "discover_link_sc"
+path = "src/discover_link_sc.rs"
+
+[[bin]]
+name = "run_exp"
+path = "src/run_exp.rs"

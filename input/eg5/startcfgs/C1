@@ -1,0 +1,28 @@
+hostname C1
+! interface Loopback0
+!  ip address 16.8.8.1 255.255.255.255
+!  no shut
+interface GigabitEthernet0/0
+ description H1_C1
+ ip address 16.1.0.1 255.255.255.0
+ no shut
+interface GigabitEthernet0/1
+ description C1_P1
+ ip address 8.1.2.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description C1_P2
+ ip address 8.2.2.2 255.255.255.252
+ no shut
+router bgp 65000
+ ! Using loopback0 between C1 and P1/P2 will lead to 
+ ! no routing between C1 and P1/P2
+ ! since they are not connected by OSPF.
+ neighbor 8.1.2.1 remote-as 65001
+ network 8.1.2.0 mask 255.255.255.252
+ neighbor 8.2.2.1 remote-as 65001
+ network 8.2.2.0 mask 255.255.255.252
+ ! network 16.1.0.0 mask 255.255.255.0
+！
+do wr
+！

@@ -1,0 +1,39 @@
+hostname RR
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description RR_P1
+ ip address 8.1.0.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description RR_P2
+ ip address 8.2.0.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description RR_P3
+ ip address 8.3.0.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/3
+ description RR_P4
+ ip address 8.4.0.2 255.255.255.252
+ no shut
+router ospf 1
+ network 8.0.0.0 0.255.255.255 area 0
+router bgp 65001
+ neighbor 8.8.8.1 remote-as 65001
+ neighbor 8.8.8.1 update-source Loopback0
+ neighbor 8.8.8.1 route-reflector-client
+ neighbor 8.8.8.2 remote-as 65001
+ neighbor 8.8.8.2 update-source Loopback0
+ neighbor 8.8.8.2 route-reflector-client
+ neighbor 8.8.8.3 remote-as 65001
+ neighbor 8.8.8.3 update-source Loopback0
+ neighbor 8.8.8.3 route-reflector-client
+ neighbor 8.8.8.4 remote-as 65001
+ neighbor 8.8.8.4 update-source Loopback0
+ neighbor 8.8.8.4 route-reflector-client
+ redistribute connected
+！
+do wr
+！

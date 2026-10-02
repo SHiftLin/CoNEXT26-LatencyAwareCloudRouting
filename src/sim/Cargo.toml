@@ -1,0 +1,15 @@
+[package]
+name = "sim"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# hashbrown = { git = "https://github.com/l0nl1f3/hashbrown.git" }
+hashbrown = "0.15"
+log = "0.4.17"
+paste = "1.0.14"
+rand = "0.8.5"
+topo = { path = "../topo" }
+fastmap = { path = "../fastmap" }

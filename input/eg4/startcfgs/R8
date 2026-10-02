@@ -1,0 +1,27 @@
+hostname R8
+interface Loopback0
+ description loopback
+ ip address 3.127.0.8 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description R8_R9
+ ip address 3.8.0.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description R8_R3
+ ip address 2.3.2.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description R8_R4
+ ip address 2.4.2.2 255.255.255.252
+ no shut
+router ospf 1
+ network 3.0.0.0 0.255.255.255 area 0
+router bgp 3
+ neighbor 3.127.0.9 remote-as 3
+ neighbor 3.127.0.9 update-source loopback0
+ neighbor 2.3.2.1 remote-as 2
+ network 2.3.2.0 mask 255.255.255.252
+ neighbor 2.4.2.1 remote-as 2
+ network 2.4.2.0 mask 255.255.255.252
+do wr

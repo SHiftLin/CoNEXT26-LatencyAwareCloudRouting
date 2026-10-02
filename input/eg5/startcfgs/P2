@@ -1,0 +1,30 @@
+hostname P2
+interface Loopback0
+ ip address 8.8.8.2 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description P2_P3
+ ip address 8.2.0.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description P2_P4
+ ip address 8.2.1.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description P2_C1
+ ip address 8.2.2.1 255.255.255.252
+ no shut
+router ospf 1
+ network 8.0.0.0 0.255.255.255 area 0
+router bgp 65001
+ neighbor 8.2.2.2 remote-as 65000
+ neighbor 8.8.8.3 remote-as 65001
+ neighbor 8.8.8.3 update-source loopback0
+ neighbor 8.8.8.4 remote-as 65001
+ neighbor 8.8.8.4 update-source loopback0
+ ! network 8.2.0.0 mask 255.255.255.252
+ ! network 8.2.1.0 mask 255.255.255.252
+ network 8.2.2.0 mask 255.255.255.252
+！
+do wr
+！

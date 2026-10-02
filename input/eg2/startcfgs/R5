@@ -1,0 +1,45 @@
+hostname R5
+interface Loopback0
+ description loopback
+ ip address 3.127.0.5 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description R5_R2
+ ip address 3.5.0.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description R5_R3
+ ip address 3.5.1.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description R5_R4
+ ip address 3.5.2.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/3
+ description R5_R6
+ ip address 3.5.3.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/4
+ description R5_R7
+ ip address 3.5.4.1 255.255.255.252
+ no shut
+interface GigabitEthernet0/5
+ description R5_R8
+ ip address 3.5.5.1 255.255.255.252
+ no shut
+router ospf 1
+ network 3.0.0.0 0.255.255.255 area 0
+router bgp 3
+ neighbor 3.5.0.2 remote-as 2
+ network 3.5.0.0 mask 255.255.255.252
+ neighbor 3.5.1.2 remote-as 2
+ network 3.5.1.0 mask 255.255.255.252
+ neighbor 3.5.2.2 remote-as 2
+ network 3.5.2.0 mask 255.255.255.252
+ neighbor 3.5.3.2 remote-as 4
+ network 3.5.3.0 mask 255.255.255.252
+ neighbor 3.5.4.2 remote-as 4
+ network 3.5.4.0 mask 255.255.255.252
+ neighbor 3.5.5.2 remote-as 4
+ network 3.5.5.0 mask 255.255.255.252
+do wr

@@ -1,0 +1,27 @@
+hostname R9
+interface Loopback0
+ description loopback
+ ip address 5.127.0.9 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description R9_R6
+ ip address 4.6.3.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description R9_R7
+ ip address 4.7.3.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description R9_R8
+ ip address 4.8.3.2 255.255.255.252
+ no shut
+router ospf 1
+ network 5.0.0.0 0.255.255.255 area 0
+router bgp 5
+ neighbor 4.6.3.1 remote-as 4
+ network 4.6.3.0 mask 255.255.255.252
+ neighbor 4.7.3.1 remote-as 4
+ network 4.7.3.0 mask 255.255.255.252
+ neighbor 4.8.3.1 remote-as 4
+ network 4.8.3.0 mask 255.255.255.252
+do wr

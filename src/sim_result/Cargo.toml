@@ -1,0 +1,8 @@
+[package]
+name = "sim_result"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+topo = { path = "../topo" }
+geographiclib-rs = "0.2.4"

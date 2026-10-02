@@ -1,0 +1,60 @@
+hostname RR7
+interface Loopback0
+ description loopback
+ ip address 2.127.0.7 255.255.255.255
+ no shutdown
+interface GigabitEthernet0/0
+ description RR7_R2
+ ip address 2.2.0.2 255.255.255.252
+ no shutdown
+interface GigabitEthernet0/1
+ description RR7_R3
+ ip address 2.3.0.2 255.255.255.252
+ no shutdown
+interface GigabitEthernet0/2
+ description RR7_R4
+ ip address 2.4.0.2 255.255.255.252
+ no shutdown
+interface GigabitEthernet0/3
+ description RR7_R5
+ ip address 2.5.0.2 255.255.255.252
+ no shutdown
+interface GigabitEthernet0/4
+ description RR7_R8
+ ip address 2.7.4.1 255.255.255.252
+ no shutdown
+interface GigabitEthernet0/5
+ description RR7_R9
+ ip address 2.7.5.1 255.255.255.252
+ no shutdown
+router ospf 1
+ network 2.0.0.0 0.255.255.255 area 0
+router bgp 2
+ neighbor 2.127.0.2 remote-as 2
+ neighbor 2.127.0.2 update-source loopback0
+ neighbor 2.127.0.3 remote-as 2
+ neighbor 2.127.0.3 update-source loopback0
+ neighbor 2.127.0.4 remote-as 2
+ neighbor 2.127.0.4 update-source loopback0
+ neighbor 2.127.0.5 remote-as 2
+ neighbor 2.127.0.5 update-source loopback0
+ neighbor 2.127.0.8 remote-as 2
+ neighbor 2.127.0.8 update-source loopback0
+ neighbor 2.127.0.9 remote-as 2
+ neighbor 2.127.0.9 update-source loopback0
+ neighbor 2.127.0.2 route-reflector-client
+ neighbor 2.127.0.3 route-reflector-client
+ neighbor 2.127.0.4 route-reflector-client
+ neighbor 2.127.0.5 route-reflector-client
+ neighbor 2.127.0.8 route-reflector-client
+ neighbor 2.127.0.9 route-reflector-client
+ address-family ipv4
+  bgp additional-paths send receive
+  bgp additional-paths select all
+  neighbor 2.127.0.2 advertise additional-paths all
+  neighbor 2.127.0.3 advertise additional-paths all
+  neighbor 2.127.0.4 advertise additional-paths all
+  neighbor 2.127.0.5 advertise additional-paths all
+  neighbor 2.127.0.8 advertise additional-paths all
+  neighbor 2.127.0.9 advertise additional-paths all
+do wr

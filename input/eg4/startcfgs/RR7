@@ -1,0 +1,37 @@
+hostname RR7
+interface Loopback0
+ description loopback
+ ip address 2.127.0.7 255.255.255.255
+ no shut
+interface GigabitEthernet0/0
+ description RR7_R3
+ ip address 2.3.0.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/1
+ description RR7_R4
+ ip address 2.4.0.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/2
+ description RR7_R5
+ ip address 2.5.0.2 255.255.255.252
+ no shut
+interface GigabitEthernet0/3
+ description RR7_R6
+ ip address 2.6.0.2 255.255.255.252
+ no shut
+router ospf 1
+ network 2.0.0.0 0.255.255.255 area 0
+router bgp 2
+ neighbor 2.127.0.3 remote-as 2
+ neighbor 2.127.0.3 update-source loopback0
+ neighbor 2.127.0.4 remote-as 2
+ neighbor 2.127.0.4 update-source loopback0
+ neighbor 2.127.0.5 remote-as 2
+ neighbor 2.127.0.5 update-source loopback0
+ neighbor 2.127.0.6 remote-as 2
+ neighbor 2.127.0.6 update-source loopback0
+ neighbor 2.127.0.3 route-reflector-client
+ neighbor 2.127.0.4 route-reflector-client
+ neighbor 2.127.0.5 route-reflector-client
+ neighbor 2.127.0.6 route-reflector-client
+do wr

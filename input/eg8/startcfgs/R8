@@ -1,0 +1,23 @@
+hostname R8
+interface Loopback0
+ description loopback
+ ip address 2.127.0.8 255.255.255.255
+ no shutdown
+interface GigabitEthernet0/0
+ description R8_RR7
+ ip address 2.7.4.2 255.255.255.252
+ no shutdown
+interface GigabitEthernet0/1
+ description R8_R1
+ ip address 2.8.1.1 255.255.255.252
+ no shutdown
+router ospf 1
+ network 2.0.0.0 0.255.255.255 area 0
+router bgp 2
+ neighbor 2.127.0.7 remote-as 2
+ neighbor 2.127.0.7 update-source loopback0
+ neighbor 2.8.1.2 remote-as 1
+ network 2.8.1.0 mask 255.255.255.252
+ address-family ipv4
+  bgp additional-paths receive
+do wr
