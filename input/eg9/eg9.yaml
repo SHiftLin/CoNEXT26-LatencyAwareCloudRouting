@@ -1,0 +1,96 @@
+project_name: eg9
+gns3_server: http://174.109.107.74
+gns3_host_ip: 174.109.107.74
+START_CFGS_PATH: input/eg9/startcfgs/
+MGMT-SW: null
+global_delay_factor: 1
+gns3_nodes:
+- appliance: Cisco IOSv 15.6(2)T
+  name: R1
+- appliance: Cisco IOSv 15.6(2)T
+  name: R2
+- appliance: Cisco IOSv 15.6(2)T
+  name: R3
+- appliance: Cisco IOSv 15.6(2)T
+  name: R4
+- appliance: Cisco IOSv 15.6(2)T
+  name: R5
+- appliance: Cisco IOSv 15.6(2)T
+  name: R6
+- appliance: Cisco IOSv 15.6(2)T
+  name: R7
+- appliance: Cisco IOSv 15.6(2)T
+  name: R8
+- appliance: Cisco IOSv 15.6(2)T
+  name: R9
+- appliance: Cisco IOSv 15.6(2)T
+  name: R10
+gns3_links:
+- node1_name: R1
+  node1_interface: '0'
+  node2_name: R2
+  node2_interface: '0'
+- node1_name: R1
+  node1_interface: '1'
+  node2_name: R3
+  node2_interface: '0'
+- node1_name: R2
+  node1_interface: '1'
+  node2_name: R3
+  node2_interface: '1'
+- node1_name: R2
+  node1_interface: '2'
+  node2_name: R4
+  node2_interface: '2'
+- node1_name: R3
+  node1_interface: '2'
+  node2_name: R5
+  node2_interface: '2'
+- node1_name: R4
+  node1_interface: '0'
+  node2_name: R5
+  node2_interface: '0'
+- node1_name: R4
+  node1_interface: '1'
+  node2_name: R6
+  node2_interface: '0'
+- node1_name: R5
+  node1_interface: '1'
+  node2_name: R7
+  node2_interface: '0'
+- node1_name: R6
+  node1_interface: '1'
+  node2_name: R7
+  node2_interface: '1'
+- node1_name: R6
+  node1_interface: '2'
+  node2_name: R8
+  node2_interface: '2'
+- node1_name: R7
+  node1_interface: '2'
+  node2_name: R9
+  node2_interface: '2'
+- node1_name: R8
+  node1_interface: '0'
+  node2_name: R9
+  node2_interface: '0'
+- node1_name: R8
+  node1_interface: '1'
+  node2_name: R10
+  node2_interface: '0'
+- node1_name: R9
+  node1_interface: '1'
+  node2_name: R10
+  node2_interface: '1'
+gns3_startup_config_telnet:
+- name: R1
+- name: R2
+- name: R3
+- name: R4
+- name: R5
+- name: R6
+- name: R7
+- name: R8
+- name: R9
+- name: R10
+gns3_mgmt_links: []

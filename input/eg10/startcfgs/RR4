@@ -1,0 +1,45 @@
+hostname RR4
+interface Loopback0
+ description loopback
+ ip address 2.127.0.4 255.255.255.255
+ no shutdown
+interface GigabitEthernet0/0
+ description RR4_R3
+ ip address 2.3.0.2 255.255.255.252
+ ip ospf cost 10
+ no shutdown
+interface GigabitEthernet0/1
+ description RR4_R5
+ ip address 2.4.1.1 255.255.255.252
+ ip ospf cost 100
+ no shutdown
+interface GigabitEthernet0/2
+ description RR4_R6
+ ip address 2.4.2.1 255.255.255.252
+ ip ospf cost 120
+ no shutdown
+router ospf 1
+ network 2.0.0.0 0.255.255.255 area 0
+router bgp 2
+ neighbor 2.127.0.3 remote-as 2
+ neighbor 2.127.0.3 update-source loopback0
+ neighbor 2.127.0.3 aigp
+ neighbor 2.127.0.5 remote-as 2
+ neighbor 2.127.0.5 update-source loopback0
+ neighbor 2.127.0.5 aigp
+ neighbor 2.127.0.6 remote-as 2
+ neighbor 2.127.0.6 update-source loopback0
+ neighbor 2.127.0.6 aigp
+! network 2.127.0.4 mask 255.255.255.255 route-map SET_AIGP
+ neighbor 2.127.0.3 route-reflector-client
+ neighbor 2.127.0.5 route-reflector-client
+ neighbor 2.127.0.6 route-reflector-client
+ address-family ipv4
+  bgp additional-paths send receive
+  bgp additional-paths select all
+  neighbor 2.127.0.3 advertise additional-paths all
+  neighbor 2.127.0.5 advertise additional-paths all
+  neighbor 2.127.0.6 advertise additional-paths all
+route-map SET_AIGP permit 10
+ set aigp-metric igp-metric
+do wr

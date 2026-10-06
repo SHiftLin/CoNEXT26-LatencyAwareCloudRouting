@@ -1,0 +1,30 @@
+hostname R1
+interface Loopback0
+ description loopback
+ ip address 1.127.0.1 255.255.255.255
+ no shutdown
+interface GigabitEthernet0/0
+ description R1_R2
+ ip address 1.1.0.1 255.255.255.252
+ ip ospf cost 10
+ no shutdown
+interface GigabitEthernet0/1
+ description R1_R3
+ ip address 1.1.1.1 255.255.255.252
+ ip ospf cost 50
+ no shutdown
+router ospf 1
+ network 1.0.0.0 0.255.255.255 area 0
+router bgp 1
+ neighbor 1.127.0.2 remote-as 1
+ neighbor 1.127.0.2 update-source loopback0
+ neighbor 1.127.0.2 aigp
+ neighbor 1.127.0.3 remote-as 1
+ neighbor 1.127.0.3 update-source loopback0
+ neighbor 1.127.0.3 aigp
+! network 1.127.0.1 mask 255.255.255.255 route-map SET_AIGP
+ address-family ipv4
+  bgp additional-paths receive
+route-map SET_AIGP permit 10
+ set aigp-metric igp-metric
+do wr

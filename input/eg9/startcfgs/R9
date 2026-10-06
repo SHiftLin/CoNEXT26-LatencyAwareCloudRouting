@@ -1,0 +1,38 @@
+hostname R9
+interface Loopback0
+ description loopback
+ ip address 3.127.0.9 255.255.255.255
+ no shutdown
+interface GigabitEthernet0/0
+ description R9_R8
+ ip address 3.8.0.2 255.255.255.252
+ ip ospf cost 30
+ no shutdown
+interface GigabitEthernet0/1
+ description R9_R10
+ ip address 3.9.1.1 255.255.255.252
+ ip ospf cost 30
+ no shutdown
+interface GigabitEthernet0/2
+ description R9_R7
+ ip address 2.7.2.2 255.255.255.252
+ ip ospf cost 1
+ no shutdown
+router ospf 1
+ network 3.0.0.0 0.255.255.255 area 0
+router bgp 3
+ neighbor 3.127.0.8 remote-as 3
+ neighbor 3.127.0.8 update-source loopback0
+ neighbor 3.127.0.8 aigp
+ neighbor 3.127.0.10 remote-as 3
+ neighbor 3.127.0.10 update-source loopback0
+ neighbor 3.127.0.10 aigp
+ neighbor 2.7.2.1 remote-as 2
+ network 2.7.2.0 mask 255.255.255.252
+ neighbor 2.7.2.1 aigp
+! network 3.127.0.9 mask 255.255.255.255 route-map SET_AIGP
+ address-family ipv4
+  bgp additional-paths receive
+route-map SET_AIGP permit 10
+ set aigp-metric igp-metric
+do wr
